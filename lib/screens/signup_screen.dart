@@ -32,12 +32,44 @@ class _SignupScreenState extends State<SignupScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const Text(
-                'Grocery App',
+                '!DealMart',
                 style: TextStyle(
                   fontFamily: 'Billabong',
-                  fontSize: 50.0,
+                  fontSize: 25.0,
                 ),
               ),
+
+              const Text(
+                'Welcome to !DealMart',
+                style: TextStyle(
+                  fontFamily: 'Billabong',
+                  fontSize: 25.0,
+                ),
+              ),
+
+
+
+              Column(
+                children: [
+                  Divider(
+                    color: Colors.grey,
+                    thickness: MediaQuery.of(context).size.width / 100, // Adjust thickness based on screen width
+                  ),
+                  Text(
+                    'Create an Account',
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 20, // Adjust font size based on screen width
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: MediaQuery.of(context).size.width / 100, // Adjust thickness based on screen width
+                  ),
+                ],
+              ),
+
+
+
               Form(
                 key: _formKey,
                 child: Column(
@@ -63,7 +95,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       child: TextFormField(
                         decoration:
-                            const InputDecoration(labelText: 'Username'),
+                        const InputDecoration(labelText: 'Username'),
                         validator: (input) => input!.trim().isEmpty
                             ? 'Please enter a valid username'
                             : null,
@@ -90,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       child: TextFormField(
                         decoration:
-                            const InputDecoration(labelText: 'Password'),
+                        const InputDecoration(labelText: 'Password'),
                         validator: (input) => input!.length < 6
                             ? 'Must be at least 6 characters'
                             : null,
@@ -104,25 +136,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         left: 40,
                         right: 40,
                       ),
-                      child: Container(
-                        width: double.infinity,
-                        color: Colors.blue,
-                        child: _isLoading
-                            ? const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            : TextButton(
-                                onPressed: () => _signUpUser(),
-                                child: const Text(
-                                  'Sign Up',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
+                      child: ResponsiveButton(
+                        text: 'Sign Up',
+                        onPressed: () => _signUpUser(),
                       ),
                     ),
                     const SizedBox(height: 20.0),
@@ -177,5 +193,49 @@ class _SignupScreenState extends State<SignupScreen> {
         });
       }
     }
+  }
+}
+
+class ResponsiveButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+
+  const ResponsiveButton({
+    required this.text,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: ElevatedButton(
+                  onPressed: onPressed,
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  child: Text(
+                    text,
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

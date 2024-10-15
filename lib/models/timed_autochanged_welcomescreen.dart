@@ -22,7 +22,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration (seconds: 5), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage < 2) {
         _currentPage++;
       } else {
@@ -30,7 +30,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
       }
       _pageController.animateToPage(
         _currentPage,
-        duration: const Duration (milliseconds: 300),
+        duration: const Duration(milliseconds: 200),
         curve: Curves.easeIn,
       );
     });
@@ -83,52 +83,142 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              const SizedBox(height: 20),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final isLandscape = constraints.maxWidth > constraints.maxHeight;
+                  final isSmallScreen = constraints.maxWidth < 600;
+
+                  if (isSmallScreen) {
+                    // Stack buttons vertically
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: constraints.maxWidth * 0.8, // Adjust width as needed
+                          child: FloatingActionButton(
+                            backgroundColor: const Color(0xFF006161),
+                            foregroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                            elevation: 0,
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignupScreen())),
+                            child: const Text(
+                              'Signup',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10), // Optional spacing between buttons
+                        SizedBox(
+                          width: constraints.maxWidth * 0.8, // Adjust width as needed
+                          child: FloatingActionButton(
+                            backgroundColor: const Color(0xFFFFFFFF),
+                            foregroundColor: const Color(0xFF006161),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: const BorderSide(
+                                color: Color(0xFF006161),
+                                width: 2,
+                              ),
+                            ),
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen())),
+                            child: const Text(
+                              'Login',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else if (isLandscape) {
+                    // Place buttons side by side with spacing
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FloatingActionButton(
+                          backgroundColor: const Color(0xFF006161),
+                          foregroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                          elevation: 0,
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignupScreen())),
+                          child: const Text(
+                            'Signup',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        FloatingActionButton(
+                          backgroundColor: const Color(0xFFFFFFFF),
+                          foregroundColor: const Color(0xFF006161),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: const BorderSide(
+                              color: Color(0xFF006161),
+                              width: 2,
+                            ),
+                          ),
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen())),
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    // Place buttons side by side without spacing
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FloatingActionButton(
+                          backgroundColor: const Color(0xFF006161),
+                          foregroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                          elevation: 0,
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignupScreen())),
+                          child: const Text(
+                            'Signup',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        FloatingActionButton(
+                          backgroundColor: const Color(0xFFFFFFFF),
+                          foregroundColor: const Color(0xFF006161),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: const BorderSide(
+                              color: Color(0xFF006161),
+                              width: 2,
+                            ),
+                          ),
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen())),
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  // Use ElevatedButton instead of FlatButton for a more modern look
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle button press
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignupScreen()),
-                      );
-                    },
-                    child: const Text(
-                      'Getting Started',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Text(
-                        'Have an account?',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () =>
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                        ),
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
             ],
           ),
         ),

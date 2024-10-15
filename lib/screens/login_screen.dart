@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailIdController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   @override
   void dispose() {
@@ -63,8 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _bottomBar(),
       body: _body(),
+      bottomNavigationBar: _bottomBar(),
     );
   }
 
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: TextField(
         controller: _emailIdController,
         decoration: const InputDecoration(
-          hintText: 'Email or username',
+          hintText: 'Email',
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
           ),
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
         margin: const EdgeInsets.only(top: 10.0),
         width: 500.0,
         height: 40.0,
-        color: Colors.blue,
+        color: const Color(0xFF006161),
         child: _isLoading
             ? const Center(
           child: CircularProgressIndicator(
@@ -129,29 +129,18 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       alignment: Alignment.center,
       height: 49.5,
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
-            height: 1.0,
-            color: Colors.grey.withOpacity(0.7),
+          const Text(
+            'Don\'t have an account?',
+            style: Styles.textStyleGrey,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 0.5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Don\'t have an account?',
-                  style: Styles.textStyleGrey,
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pushNamed(context, SignupScreen.id),
-                  child: const Text(
-                    'Sign Up.',
-                    style: Styles.textStyleGrey,
-                  ),
-                ),
-              ],
+          TextButton(
+            onPressed: () => Navigator.pushNamed(context, SignupScreen.id),
+            child: const Text(
+              'Register',
+              style: Styles.textStyleGrey,
             ),
           ),
         ],
@@ -162,35 +151,71 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _body() {
     return Container(
       alignment: Alignment.center,
-      padding: const EdgeInsets.all(25.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      // padding: const EdgeInsets.all(25.0),
+      child: Stack(
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.only(top: 25.0, bottom: 15.0),
-            child: Text(
-              'Grocery App',
-              style: TextStyle(fontFamily: 'Billabong', fontSize: 50.0),
+
+          Image.asset(
+            'lib/assets/login_background.jpg',
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+          ),
+
+
+          const Positioned(
+            bottom: 700,
+            left: 100,
+            right: 100,
+            child: Padding(
+              padding: EdgeInsets.only(top: 25.0, bottom: 15.0),
+              child: Text(
+                '!DealMart',
+                style: TextStyle(fontFamily: 'Billabong', fontSize: 50.0, color: Colors.green),
+              ),
             ),
           ),
-          _userIDEditContainer(),
-          _passwordEditContainer(),
-          _loginContainer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Forgot your login details?',
-                style: Styles.textStyleGrey,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Get help logging in.',
-                  style: Styles.textStyleBlueGrey,
+
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: MediaQuery.of(context).size.height * 0.50,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
                 ),
-              )
-            ],
+
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      _userIDEditContainer(),
+                      _passwordEditContainer(),
+                      _loginContainer(),
+
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Get help logging in.',
+                              style: Styles.textStyleBlueGrey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
