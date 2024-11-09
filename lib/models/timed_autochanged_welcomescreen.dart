@@ -1,21 +1,21 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:grocery_app/screens/home_screen.dart';
 import '../screens/login_screen.dart';
 import '../screens/signup_screen.dart';
 import '../widgets/slide_item.dart';
 import 'slide.dart';
 import '../widgets/slide_dots.dart';
 
-class GettingStartedScreen extends StatefulWidget {
+class WelcomeScreen extends StatefulWidget {
   static const String id = 'test_screen';
-  const GettingStartedScreen({super.key});
+  const WelcomeScreen({super.key});
 
   @override
   _GettingStartedScreenState createState() => _GettingStartedScreenState();
 }
 
-class _GettingStartedScreenState extends State<GettingStartedScreen> {
+class _GettingStartedScreenState extends State<WelcomeScreen> {
   int _currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
@@ -95,7 +95,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: constraints.maxWidth * 0.8, // Adjust width as needed
+                          width: constraints.maxWidth * 0.8,
                           child: FloatingActionButton(
                             backgroundColor: const Color(0xFF006161),
                             foregroundColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -112,7 +112,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                         ),
                         const SizedBox(height: 10), // Optional spacing between buttons
                         SizedBox(
-                          width: constraints.maxWidth * 0.8, // Adjust width as needed
+                          width: constraints.maxWidth * 0.8,
                           child: FloatingActionButton(
                             backgroundColor: const Color(0xFFFFFFFF),
                             foregroundColor: const Color(0xFF006161),
@@ -133,6 +133,20 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
+                        ),
+                        SizedBox(
+                          width: constraints.maxWidth * 0.8,
+                          child: TextButton(
+                            onPressed: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const HomeScreen()),
+                            ),
+                            child: const Text(
+                              'Continue without Login/Signup',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+
                         ),
                       ],
                     );
@@ -211,6 +225,19 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                                   builder: (context) => const LoginScreen())),
                           child: const Text(
                             'Login',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+
+                        TextButton(
+                          onPressed: () => Navigator.pushReplacementNamed(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()
+                            ) as String
+                        ),
+                          child: const Text(
+                            'Continue without Login/Signup',
                             style: TextStyle(fontSize: 18),
                           ),
                         ),

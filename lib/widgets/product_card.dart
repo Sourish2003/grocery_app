@@ -1,79 +1,111 @@
 import 'package:flutter/material.dart';
+import '../models/product.dart';
 
 class ProductCard extends StatelessWidget {
-  final String imageUrl;
-  final String name;
-  final double price;
-  final double discount;
+  final Product product;
+  final Function() onAddToCart;
+  final Function() onBuyNow;
 
   const ProductCard({
     super.key,
-    required this.imageUrl,
-    required this.name,
-    required this.price,
-    required this.discount,
+    required this.product,
+    required this.onAddToCart,
+    required this.onBuyNow,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Container(
-            height: constraints.maxHeight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 3, // Adjust this value to control image height ratio
-                  child: Image.asset(
-                    imageUrl,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+      child: Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image container with fixed ratio
+              Expanded(
+                flex: 3,
+                child: Image.asset(
+                  product.imageUrl,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                Expanded(
-                  flex: 2, // Adjust this value to control text area height ratio
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Price: \$$price',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        if (discount > 0)
-                          Text(
-                            'Discount: \$$discount',
-                            style: const TextStyle(
-                              color: Colors.red,
+              ),
+              // Content container with fixed size
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // This helps distribute space
+                    children: [
+                      // Product info
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              product.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            const SizedBox(height: 4),
+                            Text(
+                              'Price: \$${product.price}',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (product.discount > 0)
+                              Text(
+                                'Discount: \$${product.discount}',
+                                style: const TextStyle(
+                                  color: Colors.red,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                          ],
+                        ),
+                      ),
+                      // Button with fixed height
+                      SizedBox(
+                        width: double.infinity,
+                        height: 36, // Fixed height for the button
+                        child: ElevatedButton(
+                          onPressed: onBuyNow,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 0), // Reduce padding
                           ),
-                      ],
-                    ),
+                          child: const Text('Buy Now'),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
+            ],
+          ),
+          // Cart button
+          Positioned(
+            top: 8,
+            right: 8,
+            child: IconButton(
+              icon: const Icon(Icons.add_shopping_cart),
+              onPressed: onAddToCart,
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+              ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
