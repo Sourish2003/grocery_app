@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/product.dart';
 import '../widgets/product_card.dart';
 
@@ -11,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Product> products = [
-      // Replace with your actual product data
+
       Product(
         imageUrl: 'lib/assets/product_1.jpg',
         name: 'Product 1',
@@ -31,22 +30,26 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Grocery App'),
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            childAspectRatio: 0.7, // Adjust this value to make cards taller or shorter
+          ),
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            final Product product = products[index];
+            return ProductCard(
+              imageUrl: product.imageUrl,
+              name: product.name,
+              price: product.price,
+              discount: product.discount,
+            );
+          },
         ),
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          final Product product = products[index];
-          return ProductCard(
-            imageUrl: product.imageUrl,
-            name: product.name,
-            price: product.price,
-            discount: product.discount,
-          );
-        },
       ),
     );
   }
