@@ -64,7 +64,7 @@ class ProductCard extends StatelessWidget {
                             ),
                             if (product.discount > 0)
                               Text(
-                                'Discount: \$${product.discount}',
+                                'Discount: \Rs. ${product.discount}',
                                 style: const TextStyle(
                                   color: Colors.red,
                                 ),
@@ -74,14 +74,15 @@ class ProductCard extends StatelessWidget {
                           ],
                         ),
                       ),
+
                       // Button with fixed height
                       SizedBox(
                         width: double.infinity,
-                        height: 36, // Fixed height for the button
+                        height: 36,
                         child: ElevatedButton(
                           onPressed: onBuyNow,
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 0), // Reduce padding
+                            padding: const EdgeInsets.symmetric(vertical: 0),
                           ),
                           child: const Text('Buy Now'),
                         ),
